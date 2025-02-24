@@ -3,7 +3,7 @@
 #include <linux/ip.h>
 #include <linux/tcp.h>
 #include <linux/udp.h>
-#include <bpf/bpf_helpers.h> //need linux ubuntu 
+#include <bpf/bpf_helpers.h>
 #include <linux/in.h> 
 
 
@@ -30,7 +30,7 @@ int xdp_packet_filter(struct xdp_md *ctx) {
 
 
         if (dest_port == 8000 || dest_port == 443) {
-			 bpf_printk("Sezer detect Package: Port %d\n", dest_port);
+		bpf_printk("sezer port detected: Port %d\n", dest_port);
             return XDP_DROP; 
         }
     }
@@ -40,3 +40,13 @@ int xdp_packet_filter(struct xdp_md *ctx) {
 
 
 char _license[] SEC("license") = "GPL";
+
+
+/*
+	info - Linux rookie-virtual-machine 6.5.0-35-generic #35~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Tue May  7 09:00:52 UTC 2 x86_64 x86_64 x86_64 GNU/Linux
+	
+	sudo ip link set dev ens33 xdp obj xdp_program.o sec xdp
+	sudo ip link set dev ens33 xdp off
+	sudo cat /sys/kernel/debug/tracing/trace_pipe
+
+*/
