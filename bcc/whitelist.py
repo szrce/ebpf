@@ -9,13 +9,13 @@ program = """
 #define WHITELIST_SIZE 2
 
 // Whitelisted process
-const char whitelist[WHITELIST_SIZE][16] = {
+const char whitelist[WHITELIST_SIZE][255] = {
     "systemd-journal",
     "systemd-udevd"
 };
 
 int block_kill(struct pt_regs *ctx) {
-    char comm[16];
+    char comm[255];
 
     // process name
     bpf_get_current_comm(&comm, sizeof(comm));
